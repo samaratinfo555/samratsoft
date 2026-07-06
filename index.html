@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity IRCTC Fast-Book Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-bolt logo-icon"></i>
+            <div>
+                <h1 class="logo-text">ANTIGRAVITY</h1>
+                <span class="tagline">IRCTC DIRECT-BOOK AGENT</span>
+            </div>
+        </div>
+        <div>
+            <span class="concession-tag" style="background: rgba(59, 130, 246, 0.15); color: var(--accent-primary); padding: 0.4rem 0.8rem; border-radius: 8px;">
+                <i class="fas fa-network-wired"></i> IRCTC Bridge: Active
+            </span>
+        </div>
+    </header>
+
+    <main class="app-container">
+        
+        <!-- Left Column: Search and Train Listings & Booking Gateway -->
+        <section>
+            
+            <!-- Panel 1: Search Trains -->
+            <div class="section-panel">
+                <h2><i class="fas fa-search"></i> Search Trains</h2>
+                <form id="search-form">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label for="from-station">From Station</label>
+                            <select id="from-station" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="to-station">To Station</label>
+                            <select id="to-station" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="travel-date">Journey Date</label>
+                            <input type="date" id="travel-date" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-sync-alt"></i> Find Trains
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Panel 2: Train Results -->
+            <div class="section-panel">
+                <h2><i class="fas fa-train"></i> Available Trains</h2>
+                <div id="train-results" class="train-results-wrapper">
+                    <!-- Train cards dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Panel 3: IRCTC Fast-Book Agent Control Panel -->
+            <div class="section-panel">
+                <h2><i class="fas fa-rocket"></i> IRCTC Direct-Book Gateway</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.5;">
+                    Automate your IRCTC ticket booking. Follow the instructions below to fill passenger lists and redirect directly to payment mode in seconds.
+                </p>
+                <div class="irctc-connect-wrapper">
+                    <!-- Secure Credentials Card -->
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; margin-bottom: 1.2rem;">
+                        <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; color: #fbbf24;">
+                            <i class="fas fa-key"></i> IRCTC Account Fast-Login Settings
+                        </h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label style="font-size: 0.75rem; color: var(--text-muted);">IRCTC User ID</label>
+                                <input type="text" id="irctc-uid" class="form-control" style="height: 38px; font-size: 0.85rem;" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.75rem; color: var(--text-muted);">IRCTC Password</label>
+                                <input type="password" id="irctc-pwd" class="form-control" style="height: 38px; font-size: 0.85rem;" placeholder="••••••••">
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; font-size: 0.75rem; color: var(--text-muted);">
+                            <input type="checkbox" id="save-creds" checked>
+                            <label for="save-creds" style="cursor: pointer;">Remember credentials locally on this device</label>
+                        </div>
+                    </div>
+
+                    <div class="connector-cards">
+                        
+                        <!-- Connector 1: Tampermonkey Automation -->
+                        <div class="connector-card">
+                            <i class="fas fa-plug card-icon"></i>
+                            <div>
+                                <h4>1. Browser Script (UserScript)</h4>
+                                <p>Automate booking via our custom Tampermonkey browser script.</p>
+                            </div>
+                            <button id="btn-copy-payload" class="btn-secondary">
+                                <i class="fas fa-copy"></i> Copy Passenger Payload
+                            </button>
+                        </div>
+
+                        <!-- Connector 2: Manual Console Autofill -->
+                        <div class="connector-card">
+                            <i class="fas fa-terminal card-icon" style="color: var(--accent-primary); text-shadow: 0 0 15px rgba(59, 130, 246, 0.3);"></i>
+                            <div>
+                                <h4>2. Chrome Console Snippet</h4>
+                                <p>Quickly copy-paste autofill commands directly into the browser inspect tool.</p>
+                            </div>
+                            <button id="btn-copy-script" class="btn-secondary">
+                                <i class="fas fa-code"></i> Copy Autofill Script
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Direct high speed book simulation button -->
+                    <div class="big-booking-button-box">
+                        <button id="btn-simulate" class="btn-primary btn-glow">
+                            <i class="fas fa-magic"></i> Direct Booking & Payment Mode (Simulation)
+                        </button>
+                    </div>
+
+                    <!-- Setup Guide and link to script file -->
+                    <div class="integration-alert">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="alert-body">
+                            <h5>How it connects directly to IRCTC:</h5>
+                            <p>
+                                1. Open the copied script or load <a href="irctc_autofill.user.js" target="_blank">irctc_autofill.user.js</a> in Tampermonkey.<br>
+                                2. Search and click "Book Now" on IRCTC. When the Passenger Detail page loads, click the floating panel to fill all passengers and click book instantly.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Column: Passenger Management & Dynamic Pricing -->
+        <aside>
+            
+            <!-- Panel 4: Passenger Management -->
+            <div class="section-panel">
+                <h2><i class="fas fa-user-friends"></i> Passenger Directory</h2>
+                
+                <div id="passenger-list" class="passenger-list-wrapper">
+                    <!-- Passenger lists populated dynamically -->
+                </div>
+
+                <form id="add-passenger-form">
+                    <div class="passenger-input-grid">
+                        <div class="form-group">
+                            <label for="p-name">Full Name</label>
+                            <input type="text" id="p-name" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-age">Age</label>
+                            <input type="number" id="p-age" class="form-control" placeholder="Age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-gender">Gender</label>
+                            <select id="p-gender" class="form-control">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Transgender">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-berth">Berth Choice</label>
+                            <select id="p-berth" class="form-control">
+                                <option value="No Preference">No Pref</option>
+                                <option value="Lower">Lower</option>
+                                <option value="Middle">Middle</option>
+                                <option value="Upper">Upper</option>
+                                <option value="Side Lower">Side Low</option>
+                                <option value="Side Upper">Side Up</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-add-p" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-user-plus"></i> Add Passenger
+                    </button>
+                </form>
+            </div>
+
+            <!-- Panel 5: Dynamic Ticket Fare Calculator -->
+            <div class="section-panel">
+                <h2><i class="fas fa-receipt"></i> Live Fare Breakdown</h2>
+                
+                <div class="summary-header-info">
+                    <h4 id="summary-train-name">12952 - MUMBAI RAJDHANI</h4>
+                    <p id="summary-train-route">NDLS → CSMT</p>
+                    
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="class-select">Booking Class</label>
+                        <select id="class-select" class="form-control">
+                            <!-- Classes populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <div id="fare-breakdown">
+                    <!-- Dynamic breakdown rows will render here -->
+                </div>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- Simulation Modal Overlay -->
+    <div id="simulation-overlay" class="sim-overlay">
+        <div class="sim-window animate-pop">
+            <div class="sim-header">
+                <div class="sim-title">
+                    <i class="fas fa-terminal"></i>
+                    <span>IRCTC HIGH-SPEED DIRECT AGENT</span>
+                </div>
+                <div class="sim-dots">
+                    <div class="sim-dot red"></div>
+                    <div class="sim-dot yellow"></div>
+                    <div class="sim-dot green" id="btn-close-sim" style="cursor: pointer;"></div>
+                </div>
+            </div>
+            <div class="sim-body">
+                <div class="sim-progress-container">
+                    <div id="sim-progress-bar" class="sim-progress-bar"></div>
+                </div>
+                <div id="sim-log" class="sim-log">
+                    <!-- Simulated logs print here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Antigravity Train Booking Assistant. Designed for High-Speed IRCTC Tatkal & General Bookings.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
